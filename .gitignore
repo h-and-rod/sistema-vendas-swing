@@ -1,0 +1,27 @@
+nbproject/**
+build/
+dist/
+nbbuild/
+nbdist/
+.nb-gradle/
+.gradle/
+nbactions.xml
+nb-configuration.xml
+build.xml
+manifest.mf
+
+# Arquivos temporários
+*.class
+*.log
+*.tmp
+*.bak
+*.swp
+*~
+
+# Configurações locais
+*.properties
+*.iml
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
