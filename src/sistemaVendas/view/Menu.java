@@ -42,6 +42,11 @@ public class Menu extends javax.swing.JFrame {
         lbl_Menu.setText("MENU");
 
         btn_CadastroProduto.setText("Cadastro de Produto");
+        btn_CadastroProduto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_CadastroProdutoActionPerformed(evt);
+            }
+        });
 
         btn_CadastroCliente.setText("Cadastro de Cliente");
         btn_CadastroCliente.addActionListener(new java.awt.event.ActionListener() {
@@ -91,12 +96,20 @@ public class Menu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_CadastroClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_CadastroClienteActionPerformed
-        // TODO add your handling code here:
+        CadastroCliente telaCliente = new CadastroCliente();    
+        telaCliente.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btn_CadastroClienteActionPerformed
 
     private void btn_LancamentoNotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_LancamentoNotaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_LancamentoNotaActionPerformed
+
+    private void btn_CadastroProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_CadastroProdutoActionPerformed
+        CadastroProduto telaProduto = new CadastroProduto();    
+        telaProduto.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btn_CadastroProdutoActionPerformed
 
     /**
      * @param args the command line arguments
