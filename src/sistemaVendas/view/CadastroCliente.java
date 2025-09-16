@@ -7,7 +7,7 @@ package sistemaVendas.view;
 
 /**
  *
- * @author Eu
+ * @author Henrique Andrade (h-and-rod)
  */
 public class CadastroCliente extends javax.swing.JFrame {
 
