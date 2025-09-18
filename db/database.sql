@@ -1,3 +1,5 @@
+CREATE DATABASE SistemaVendas;
+
 USE sistemavendas;
 
 #Código do produto, nome, descrição, preço de venda e quantidade em estoque
@@ -25,6 +27,7 @@ CREATE TABLE Nota (
 	id int PRIMARY KEY AUTO_INCREMENT,
     dataVenda datetime,
     FK_Cliente int,
+    valorTotal DECIMAL(10,2) NULL,
     
     FOREIGN KEY (FK_Cliente) REFERENCES Cliente(id)
 );
@@ -36,6 +39,8 @@ CREATE TABLE ItensNota (
     quantidade INT NOT NULL,
     FK_Nota INT NOT NULL,
     FK_Produtos INT NOT NULL,
+    valorUnitario DECIMAL(10,2) NOT NULL,
+    valorTotal DECIMAL(10,2) GENERATED ALWAYS AS (valorUnitario * quantidade) STORED,
     FOREIGN KEY (FK_Nota) REFERENCES Nota(id),
     FOREIGN KEY (FK_Produtos) REFERENCES Produto(id)
 );
