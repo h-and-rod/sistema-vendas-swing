@@ -10,7 +10,7 @@ import sistemaVendas.model.dao.ProdutoDAO;
 
 /**
  *
- * @author Pichau
+ * @author Henrique Garcia
  */
 public class CadastroProduto extends javax.swing.JFrame {
 
@@ -35,17 +35,16 @@ public class CadastroProduto extends javax.swing.JFrame {
         txt_PrecoVendaProduto = new javax.swing.JTextField();
         btn_Limpar = new javax.swing.JButton();
         lbl_CadastroCliente = new javax.swing.JLabel();
-        txt_idProduto = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         btn_Cadastrar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_Produtos = new javax.swing.JTable();
-        lbl_Cliente = new javax.swing.JLabel();
         btn_Listar = new javax.swing.JButton();
         txt_QuantidadeProduto = new javax.swing.JTextField();
         lbl_NomeCliente = new javax.swing.JLabel();
         txt_NomeProduto = new javax.swing.JTextField();
         lbl_Endereco = new javax.swing.JLabel();
+        bnt_voltar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -73,12 +72,6 @@ public class CadastroProduto extends javax.swing.JFrame {
         lbl_CadastroCliente.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         lbl_CadastroCliente.setText("Cadastro de Produto");
 
-        txt_idProduto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_idProdutoActionPerformed(evt);
-            }
-        });
-
         jLabel2.setText("Quantidade em estoque:");
 
         btn_Cadastrar.setText("Cadastrar");
@@ -97,8 +90,6 @@ public class CadastroProduto extends javax.swing.JFrame {
             }
         ));
         jScrollPane1.setViewportView(tbl_Produtos);
-
-        lbl_Cliente.setText("ID Produto:");
 
         btn_Listar.setText("Listar cadastrados");
         btn_Listar.addActionListener(new java.awt.event.ActionListener() {
@@ -123,6 +114,13 @@ public class CadastroProduto extends javax.swing.JFrame {
 
         lbl_Endereco.setText("Descrição:");
 
+        bnt_voltar.setText("Voltar");
+        bnt_voltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bnt_voltarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -131,22 +129,23 @@ public class CadastroProduto extends javax.swing.JFrame {
                 .addGap(77, 77, 77)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lbl_Endereco)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_DescricaoProduto))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lbl_Cliente)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_idProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(bnt_voltar))
+                            .addComponent(lbl_NomeCliente))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(44, 44, 44)
                                 .addComponent(lbl_CadastroCliente)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(lbl_NomeCliente)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txt_NomeProduto))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lbl_Endereco)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txt_DescricaoProduto))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -172,11 +171,11 @@ public class CadastroProduto extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(25, 25, 25)
-                .addComponent(lbl_CadastroCliente)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbl_CadastroCliente)
+                    .addComponent(bnt_voltar))
                 .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txt_idProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbl_Cliente)
                     .addComponent(lbl_NomeCliente)
                     .addComponent(txt_NomeProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -211,12 +210,8 @@ public class CadastroProduto extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_PrecoVendaProdutoActionPerformed
 
     private void btn_LimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_LimparActionPerformed
-        // TODO add your handling code here:
+        limparFormulario();
     }//GEN-LAST:event_btn_LimparActionPerformed
-
-    private void txt_idProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_idProdutoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_idProdutoActionPerformed
 
     private void btn_CadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_CadastrarActionPerformed
         Produto p = new Produto();
@@ -227,6 +222,8 @@ public class CadastroProduto extends javax.swing.JFrame {
         
         ProdutoDAO produtoDAO = new ProdutoDAO();
         produtoDAO.inserir(p);
+        
+        limparFormulario();
     }//GEN-LAST:event_btn_CadastrarActionPerformed
 
     private void btn_ListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ListarActionPerformed
@@ -241,6 +238,19 @@ public class CadastroProduto extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_NomeProdutoActionPerformed
 
+    private void bnt_voltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bnt_voltarActionPerformed
+        Menu telaMenu = new Menu();    
+        telaMenu.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_bnt_voltarActionPerformed
+    
+    private void limparFormulario() {
+        txt_NomeProduto.setText("");
+        txt_DescricaoProduto.setText("");
+        txt_PrecoVendaProduto.setText("");
+        txt_QuantidadeProduto.setText("");
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -278,6 +288,7 @@ public class CadastroProduto extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bnt_voltar;
     private javax.swing.JButton btn_Cadastrar;
     private javax.swing.JButton btn_Limpar;
     private javax.swing.JButton btn_Listar;
@@ -285,7 +296,6 @@ public class CadastroProduto extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbl_CadastroCliente;
-    private javax.swing.JLabel lbl_Cliente;
     private javax.swing.JLabel lbl_Endereco;
     private javax.swing.JLabel lbl_NomeCliente;
     private javax.swing.JTable tbl_Produtos;
@@ -293,6 +303,5 @@ public class CadastroProduto extends javax.swing.JFrame {
     private javax.swing.JTextField txt_NomeProduto;
     private javax.swing.JTextField txt_PrecoVendaProduto;
     private javax.swing.JTextField txt_QuantidadeProduto;
-    private javax.swing.JTextField txt_idProduto;
     // End of variables declaration//GEN-END:variables
 }
