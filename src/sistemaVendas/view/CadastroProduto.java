@@ -5,6 +5,9 @@
  */
 package sistemaVendas.view;
 
+import sistemaVendas.model.Produto;
+import sistemaVendas.model.dao.ProdutoDAO;
+
 /**
  *
  * @author Pichau
@@ -27,9 +30,9 @@ public class CadastroProduto extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        txt_EnderecoProduto = new javax.swing.JTextField();
+        txt_DescricaoProduto = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        txt_EmailProduto = new javax.swing.JTextField();
+        txt_PrecoVendaProduto = new javax.swing.JTextField();
         btn_Limpar = new javax.swing.JButton();
         lbl_CadastroCliente = new javax.swing.JLabel();
         txt_idProduto = new javax.swing.JTextField();
@@ -39,24 +42,24 @@ public class CadastroProduto extends javax.swing.JFrame {
         tbl_Produtos = new javax.swing.JTable();
         lbl_Cliente = new javax.swing.JLabel();
         btn_Listar = new javax.swing.JButton();
-        txt_TelefoneProduto = new javax.swing.JTextField();
+        txt_QuantidadeProduto = new javax.swing.JTextField();
         lbl_NomeCliente = new javax.swing.JLabel();
         txt_NomeProduto = new javax.swing.JTextField();
         lbl_Endereco = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        txt_EnderecoProduto.addActionListener(new java.awt.event.ActionListener() {
+        txt_DescricaoProduto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_EnderecoProdutoActionPerformed(evt);
+                txt_DescricaoProdutoActionPerformed(evt);
             }
         });
 
         jLabel1.setText("Preço de venda:");
 
-        txt_EmailProduto.addActionListener(new java.awt.event.ActionListener() {
+        txt_PrecoVendaProduto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_EmailProdutoActionPerformed(evt);
+                txt_PrecoVendaProdutoActionPerformed(evt);
             }
         });
 
@@ -104,9 +107,9 @@ public class CadastroProduto extends javax.swing.JFrame {
             }
         });
 
-        txt_TelefoneProduto.addActionListener(new java.awt.event.ActionListener() {
+        txt_QuantidadeProduto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_TelefoneProdutoActionPerformed(evt);
+                txt_QuantidadeProdutoActionPerformed(evt);
             }
         });
 
@@ -130,7 +133,7 @@ public class CadastroProduto extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lbl_Endereco)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_EnderecoProduto))
+                        .addComponent(txt_DescricaoProduto))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lbl_Cliente)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -147,11 +150,11 @@ public class CadastroProduto extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_EmailProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txt_PrecoVendaProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_TelefoneProduto, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)))
+                        .addComponent(txt_QuantidadeProduto, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)))
                 .addGap(57, 57, 57))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -177,15 +180,15 @@ public class CadastroProduto extends javax.swing.JFrame {
                     .addComponent(lbl_NomeCliente)
                     .addComponent(txt_NomeProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lbl_Endereco)
-                    .addComponent(txt_EnderecoProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_DescricaoProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(13, 13, 13)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(txt_EmailProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_PrecoVendaProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
-                    .addComponent(txt_TelefoneProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_QuantidadeProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_Cadastrar)
@@ -199,13 +202,13 @@ public class CadastroProduto extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txt_EnderecoProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_EnderecoProdutoActionPerformed
+    private void txt_DescricaoProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_DescricaoProdutoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_EnderecoProdutoActionPerformed
+    }//GEN-LAST:event_txt_DescricaoProdutoActionPerformed
 
-    private void txt_EmailProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_EmailProdutoActionPerformed
+    private void txt_PrecoVendaProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_PrecoVendaProdutoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_EmailProdutoActionPerformed
+    }//GEN-LAST:event_txt_PrecoVendaProdutoActionPerformed
 
     private void btn_LimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_LimparActionPerformed
         // TODO add your handling code here:
@@ -216,16 +219,23 @@ public class CadastroProduto extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_idProdutoActionPerformed
 
     private void btn_CadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_CadastrarActionPerformed
-
+        Produto p = new Produto();
+        p.setNome(txt_NomeProduto.getText());
+        p.setDescricao(txt_DescricaoProduto.getText());
+        p.setPrecoVenda(Double.parseDouble(txt_PrecoVendaProduto.getText()));
+        p.setQuantidade(Integer.parseInt(txt_QuantidadeProduto.getText()));        
+        
+        ProdutoDAO produtoDAO = new ProdutoDAO();
+        produtoDAO.inserir(p);
     }//GEN-LAST:event_btn_CadastrarActionPerformed
 
     private void btn_ListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ListarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_ListarActionPerformed
 
-    private void txt_TelefoneProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_TelefoneProdutoActionPerformed
+    private void txt_QuantidadeProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_QuantidadeProdutoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_TelefoneProdutoActionPerformed
+    }//GEN-LAST:event_txt_QuantidadeProdutoActionPerformed
 
     private void txt_NomeProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_NomeProdutoActionPerformed
         // TODO add your handling code here:
@@ -279,10 +289,10 @@ public class CadastroProduto extends javax.swing.JFrame {
     private javax.swing.JLabel lbl_Endereco;
     private javax.swing.JLabel lbl_NomeCliente;
     private javax.swing.JTable tbl_Produtos;
-    private javax.swing.JTextField txt_EmailProduto;
-    private javax.swing.JTextField txt_EnderecoProduto;
+    private javax.swing.JTextField txt_DescricaoProduto;
     private javax.swing.JTextField txt_NomeProduto;
-    private javax.swing.JTextField txt_TelefoneProduto;
+    private javax.swing.JTextField txt_PrecoVendaProduto;
+    private javax.swing.JTextField txt_QuantidadeProduto;
     private javax.swing.JTextField txt_idProduto;
     // End of variables declaration//GEN-END:variables
 }
