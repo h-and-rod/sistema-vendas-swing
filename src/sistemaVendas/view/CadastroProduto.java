@@ -5,6 +5,10 @@
  */
 package sistemaVendas.view;
 
+import java.util.List;
+
+import javax.swing.table.DefaultTableModel;
+
 import sistemaVendas.model.Produto;
 import sistemaVendas.model.dao.ProdutoDAO;
 
@@ -224,10 +228,32 @@ public class CadastroProduto extends javax.swing.JFrame {
         produtoDAO.inserir(p);
         
         limparFormulario();
+        btn_ListarActionPerformed(evt);
     }//GEN-LAST:event_btn_CadastrarActionPerformed
 
     private void btn_ListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ListarActionPerformed
-        // TODO add your handling code here:
+        ProdutoDAO produtoDAO = new ProdutoDAO();
+        List<Produto> produtos = produtoDAO.getProdutos();
+
+        DefaultTableModel listaProdutos = new DefaultTableModel(
+            new String[]{"CodigoProduto", "Nome", "Descrição", "Preço", "Quantidade"}, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+        for (Produto p : produtos) {
+            listaProdutos.addRow(new Object[]{
+                p.getIdProduto(),
+                p.getNome(),
+                p.getDescricao(),
+                p.getPrecoVenda(),
+                p.getQuantidade(),
+            });
+        }
+
+        tbl_Produtos.setModel(listaProdutos);
     }//GEN-LAST:event_btn_ListarActionPerformed
 
     private void txt_QuantidadeProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_QuantidadeProdutoActionPerformed

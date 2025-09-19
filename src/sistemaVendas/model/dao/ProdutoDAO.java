@@ -5,6 +5,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 import sistemaVendas.model.Produto;
 import sistemaVendas.model.Conexao;
 
@@ -42,7 +45,7 @@ public class ProdutoDAO {
     }
 
     public Produto getProduto(int id) {
-    String sql = "SELECT * FROM pessoa WHERE id = ?";
+    String sql = "SELECT * FROM produto WHERE id = ?";
         try {
             
             PreparedStatement stmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -66,6 +69,31 @@ public class ProdutoDAO {
             System.out.println("Erro ao consultar produto: " + ex.getMessage());
             return null;
         }
+    }
+
+    public List<Produto> getProdutos() {
+        String sql = "SELECT * FROM produto";
+        List<Produto> produtos = new ArrayList<>();
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                Produto p = new Produto();
+                p.setIdProduto(rs.getInt("id"));
+                p.setNome(rs.getString("nome"));
+                p.setDescricao(rs.getString("descricao"));
+                p.setPrecoVenda(rs.getDouble("precoVenda"));
+                p.setQuantidade(rs.getInt("quantidade"));
+
+                produtos.add(p);
+            }
+
+        } catch (SQLException ex) {
+            System.out.println("Erro ao consultar produtos: " + ex.getMessage());
+        }
+
+        return produtos;
     }
 }
 
