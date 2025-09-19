@@ -5,7 +5,10 @@
  */
 package sistemaVendas.view;
 
+import java.util.List;
+
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 import sistemaVendas.model.Cliente;
 import sistemaVendas.model.dao.ClienteDAO;
@@ -55,8 +58,6 @@ public class CadastroCliente extends javax.swing.JFrame {
 
         tbl_Clientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"1", "Cliente1", "rua1", "email1@email.com", "1199999999"},
-                {"2", "Cliente2", "rua 2", "email2@email.com", "1199999999"}
             },
             new String [] {
                 "CodigoCliente", "Nome", "Endereço", "E-mail", "Telefone"
@@ -238,10 +239,34 @@ public class CadastroCliente extends javax.swing.JFrame {
         
         ClienteDAO clienteDAO = new ClienteDAO();
         clienteDAO.inserir(c);
+
+        btn_ListarActionPerformed(evt);
     }//GEN-LAST:event_btn_CadastrarActionPerformed
 
     private void btn_ListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ListarActionPerformed
-        // TODO add your handling code here:
+        
+        ClienteDAO clienteDAO = new ClienteDAO();
+        List<Cliente> clientes = clienteDAO.getClientes();
+
+        DefaultTableModel listaClientes = new DefaultTableModel(
+            new String[]{"CodigoCliente", "Nome", "Endereço", "E-mail", "Telefone"}, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+        for (Cliente c : clientes) {
+            listaClientes.addRow(new Object[]{
+                c.getIdCliente(),
+                c.getNomeCliente(),
+                c.getEnderecoCliente(),
+                c.getEmailCliente(),
+                c.getTelefoneCliente()
+            });
+        }
+
+        tbl_Clientes.setModel(listaClientes);
     }//GEN-LAST:event_btn_ListarActionPerformed
 
     /**

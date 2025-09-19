@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ClienteDAO {
     private Conexao conexao;
@@ -62,5 +64,30 @@ public class ClienteDAO {
             System.out.println("Erro ao consultar cliente: " + ex.getMessage());
             return null;
         }
+    }
+    
+    public List<Cliente> getClientes() {
+        String sql = "SELECT * FROM cliente";
+        List<Cliente> clientes = new ArrayList<>();
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                Cliente c = new Cliente();
+                c.setIdCliente(rs.getInt("id"));
+                c.setNomeCliente(rs.getString("nome"));
+                c.setEnderecoCliente(rs.getString("endereco"));
+                c.setEmailCliente(rs.getString("email"));
+                c.setTelefoneCliente(rs.getString("telefone"));
+
+                clientes.add(c);
+            }
+
+        } catch (SQLException ex) {
+            System.out.println("Erro ao consultar clientes: " + ex.getMessage());
+        }
+
+        return clientes;
     }
 }
