@@ -102,15 +102,17 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_CadastroClienteActionPerformed
 
     private void btn_LancamentoNotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_LancamentoNotaActionPerformed
-        // TODO add your handling code here:
+        LancamentoNota telaNota = new LancamentoNota();
+        telaNota.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btn_LancamentoNotaActionPerformed
 
     private void btn_CadastroProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_CadastroProdutoActionPerformed
-        CadastroProduto telaProduto = new CadastroProduto();    
+        CadastroProduto telaProduto = new CadastroProduto();
         telaProduto.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btn_CadastroProdutoActionPerformed
-
+    
     /**
      * @param args the command line arguments
      */
