@@ -95,5 +95,24 @@ public class ProdutoDAO {
 
         return produtos;
     }
+
+    public List<String> getNomesProdutos() {
+        String sql = "SELECT nome FROM produto";
+        List<String> nomesProdutos = new ArrayList<>();
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                nomesProdutos.add(rs.getString("nome"));
+            }
+
+        } catch (SQLException ex) {
+            System.out.println("Erro ao consultar nomes dos produtos: " + ex.getMessage());
+        }
+        
+        return nomesProdutos;
+    }
+
 }
 

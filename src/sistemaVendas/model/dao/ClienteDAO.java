@@ -90,4 +90,23 @@ public class ClienteDAO {
 
         return clientes;
     }
+    
+    public List<String> getNomesClientes() {
+        String sql = "SELECT nome FROM cliente";
+        List<String> nomesClientes = new ArrayList<>();
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                nomesClientes.add(rs.getString("nome"));
+            }
+            
+
+        } catch (SQLException ex) {
+            System.out.println("Erro ao consultar nomes dos produtos: " + ex.getMessage());
+        }
+        
+        return nomesClientes;
+    }
 }

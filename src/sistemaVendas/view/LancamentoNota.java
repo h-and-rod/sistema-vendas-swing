@@ -5,6 +5,10 @@
  */
 package sistemaVendas.view;
 
+import java.util.List;
+import sistemaVendas.model.dao.ClienteDAO;
+import sistemaVendas.model.dao.ProdutoDAO;
+
 /**
  *
  * @author carva
@@ -16,6 +20,8 @@ public class LancamentoNota extends javax.swing.JFrame {
      */
     public LancamentoNota() {
         initComponents();
+        carregarProdutos();
+        carregarClientes();
     }
     
     /**
@@ -43,8 +49,8 @@ public class LancamentoNota extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         txt_Quantidade = new javax.swing.JTextField();
         btn_Adicionar = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        cmb_Cliente = new javax.swing.JComboBox<>();
+        cmb_Produto = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -124,9 +130,19 @@ public class LancamentoNota extends javax.swing.JFrame {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmb_Cliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nenhum cliente selecionado" }));
+        cmb_Cliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmb_ClienteActionPerformed(evt);
+            }
+        });
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmb_Produto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nenhum cliente selecionado" }));
+        cmb_Produto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmb_ProdutoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -138,7 +154,7 @@ public class LancamentoNota extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cmb_Produto, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(27, 27, 27)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -159,7 +175,7 @@ public class LancamentoNota extends javax.swing.JFrame {
                                 .addGap(21, 21, 21)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txt_DataVenda)
-                                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                    .addComponent(cmb_Cliente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addGap(69, 69, 69))))
             .addGroup(layout.createSequentialGroup()
                 .addGap(39, 39, 39)
@@ -195,7 +211,7 @@ public class LancamentoNota extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmb_Cliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_Endereco)
@@ -206,7 +222,7 @@ public class LancamentoNota extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(txt_Quantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_Adicionar)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmb_Produto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
@@ -255,6 +271,55 @@ public class LancamentoNota extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_AdicionarActionPerformed
 
+    
+    private void carregarProdutos() {
+        try {
+            ProdutoDAO produtoDAO = new ProdutoDAO();
+            cmb_Produto.removeAllItems();
+
+            List<String> nomesProdutos = produtoDAO.getNomesProdutos();
+
+            for (String nome : nomesProdutos) {
+                cmb_Produto.addItem(nome);
+            }
+            
+            cmb_Produto.setSelectedIndex(-1);
+
+        } catch (Exception ex) {
+            System.out.println("Erro ao carregar produtos: " + ex.getMessage());
+            cmb_Produto.addItem("Erro ao carregar produtos");
+        }
+    }
+    
+    private void cmb_ProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmb_ProdutoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmb_ProdutoActionPerformed
+
+    private void carregarClientes() {
+        try {
+            ClienteDAO clienteDAO = new ClienteDAO();
+            cmb_Cliente.removeAllItems();
+            
+
+            List<String> nomesClientes = clienteDAO.getNomesClientes();
+
+            for (String nome : nomesClientes) {
+                cmb_Cliente.addItem(nome);
+            }
+
+            cmb_Cliente.setSelectedIndex(-1);
+
+        } catch (Exception ex) {
+            System.out.println("Erro ao carregar clientes: " + ex.getMessage());
+            cmb_Cliente.addItem("Erro ao carregar clientes");
+        }
+    }
+    
+    private void cmb_ClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmb_ClienteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmb_ClienteActionPerformed
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -296,8 +361,8 @@ public class LancamentoNota extends javax.swing.JFrame {
     private javax.swing.JButton btn_Limpar;
     private javax.swing.JButton btn_Listar;
     private javax.swing.JButton btn_Voltar;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JComboBox<String> cmb_Cliente;
+    private javax.swing.JComboBox<String> cmb_Produto;
     private javax.swing.JLabel jLabel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
