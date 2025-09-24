@@ -38,7 +38,7 @@ public class LancamentoNota extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        btn_Limpar = new javax.swing.JButton();
+        btn_LimparCampos = new javax.swing.JButton();
         btn_Cadastrar = new javax.swing.JButton();
         btn_Listar = new javax.swing.JButton();
         btn_Voltar = new javax.swing.JButton();
@@ -54,6 +54,7 @@ public class LancamentoNota extends javax.swing.JFrame {
         btn_Adicionar = new javax.swing.JButton();
         cmb_Cliente = new javax.swing.JComboBox<>();
         cmb_Produto = new javax.swing.JComboBox<>();
+        btn_LimparTabela = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -61,10 +62,10 @@ public class LancamentoNota extends javax.swing.JFrame {
 
         jLabel2.setText("Cliente:");
 
-        btn_Limpar.setText("Limpar campos");
-        btn_Limpar.addActionListener(new java.awt.event.ActionListener() {
+        btn_LimparCampos.setText("Limpar campos");
+        btn_LimparCampos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_LimparActionPerformed(evt);
+                btn_LimparCamposActionPerformed(evt);
             }
         });
 
@@ -118,7 +119,7 @@ public class LancamentoNota extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setText("Quantidade");
+        jLabel3.setText("Quantidade:");
 
         txt_Quantidade.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -147,58 +148,68 @@ public class LancamentoNota extends javax.swing.JFrame {
             }
         });
 
+        btn_LimparTabela.setText("Limpar Tabela");
+        btn_LimparTabela.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_LimparTabelaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(82, 82, 82)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(cmb_Produto, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(27, 27, 27)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_Quantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(33, 33, 33)
-                        .addComponent(btn_Adicionar)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel)
-                                .addGap(18, 18, 18)
-                                .addComponent(txt_IdNota))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lbl_Endereco)
-                                    .addComponent(jLabel2))
-                                .addGap(21, 21, 21)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txt_DataVenda)
-                                    .addComponent(cmb_Cliente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addGap(69, 69, 69))))
-            .addGroup(layout.createSequentialGroup()
                 .addGap(39, 39, 39)
                 .addComponent(btn_Voltar)
                 .addGap(60, 60, 60)
                 .addComponent(lbl_CadastroCliente)
-                .addGap(0, 133, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(94, 94, 94))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(82, 82, 82)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lbl_Endereco)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel2))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btn_LimparCampos)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                        .addComponent(btn_Adicionar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(82, 82, 82)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel)
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(cmb_Produto, 0, 223, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel3)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txt_Quantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(txt_IdNota, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(txt_DataVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(cmb_Cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(0, 0, Short.MAX_VALUE))))
+                            .addComponent(jScrollPane1)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btn_Listar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(33, 33, 33)
+                        .addComponent(btn_LimparTabela)
+                        .addGap(34, 34, 34)
                         .addComponent(btn_Cadastrar)
-                        .addGap(18, 18, 18)
-                        .addComponent(btn_Limpar)
-                        .addGap(128, 128, 128))))
+                        .addGap(64, 64, 64)))
+                .addGap(69, 69, 69))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -215,26 +226,28 @@ public class LancamentoNota extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(cmb_Cliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_Endereco)
                     .addComponent(txt_DataVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel3)
                     .addComponent(txt_Quantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_Adicionar)
-                    .addComponent(cmb_Produto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(jLabel3)
+                    .addComponent(cmb_Produto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_LimparCampos)
+                    .addComponent(btn_Adicionar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btn_Listar, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btn_Cadastrar)
-                        .addComponent(btn_Limpar)))
-                .addGap(47, 47, 47))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_LimparTabela)
+                    .addComponent(btn_Cadastrar)
+                    .addComponent(btn_Listar))
+                .addGap(59, 59, 59))
         );
 
         pack();
@@ -257,9 +270,9 @@ public class LancamentoNota extends javax.swing.JFrame {
         tbl_Clientes.setModel(tableModel);
     }
     
-    private void btn_LimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_LimparActionPerformed
-        limparTabela();
-    }//GEN-LAST:event_btn_LimparActionPerformed
+    private void btn_LimparCamposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_LimparCamposActionPerformed
+        limparCampos();
+    }//GEN-LAST:event_btn_LimparCamposActionPerformed
 
     private void btn_CadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_CadastrarActionPerformed
 
@@ -287,7 +300,7 @@ public class LancamentoNota extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_QuantidadeActionPerformed
 
-    private void limparTabela(){
+    private void limparCampos(){
         cmb_Produto.setSelectedIndex(-1);
         cmb_Cliente.setSelectedIndex(-1);
         txt_Quantidade.setText("");
@@ -381,7 +394,7 @@ public class LancamentoNota extends javax.swing.JFrame {
                 totalFormatado
             });
             
-            limparTabela();
+            limparCampos();
             
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Erro ao adicionar item: " + ex.getMessage(), 
@@ -436,6 +449,10 @@ public class LancamentoNota extends javax.swing.JFrame {
     private void cmb_ClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmb_ClienteActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cmb_ClienteActionPerformed
+
+    private void btn_LimparTabelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_LimparTabelaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_LimparTabelaActionPerformed
     
     
     /**
@@ -476,7 +493,8 @@ public class LancamentoNota extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_Adicionar;
     private javax.swing.JButton btn_Cadastrar;
-    private javax.swing.JButton btn_Limpar;
+    private javax.swing.JButton btn_LimparCampos;
+    private javax.swing.JButton btn_LimparTabela;
     private javax.swing.JButton btn_Listar;
     private javax.swing.JButton btn_Voltar;
     private javax.swing.JComboBox<String> cmb_Cliente;
