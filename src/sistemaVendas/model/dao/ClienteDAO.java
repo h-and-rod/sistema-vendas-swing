@@ -109,4 +109,19 @@ public class ClienteDAO {
         
         return nomesClientes;
     }
+
+    public int getIdClientePorNome(String nome) {
+        String sql = "SELECT id FROM cliente WHERE nome = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, nome);
+            ResultSet rs = stmt.executeQuery();
+            
+            if (rs.next()) {
+                return rs.getInt("id");
+            }
+        } catch (SQLException ex) {
+            System.out.println("Erro ao buscar ID do cliente: " + ex.getMessage());
+        }
+        return -1;
+    }
 }

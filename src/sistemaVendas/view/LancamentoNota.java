@@ -5,10 +5,19 @@
  */
 package sistemaVendas.view;
 
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+
+import sistemaVendas.model.ItemNota;
+import sistemaVendas.model.Nota;
 import sistemaVendas.model.dao.ClienteDAO;
+import sistemaVendas.model.dao.ItensNotaDAO;
+import sistemaVendas.model.dao.NotaDAO;
 import sistemaVendas.model.dao.ProdutoDAO;
 
 /**
@@ -274,9 +283,176 @@ public class LancamentoNota extends javax.swing.JFrame {
         limparCampos();
     }//GEN-LAST:event_btn_LimparCamposActionPerformed
 
-    private void btn_CadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_CadastrarActionPerformed
+    private void btn_CadastrarActionPerformed(java.awt.event.ActionEvent evt) {                                              
+        try {
+            if (tableModel.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(this, "Adicione pelo menos um produto!", 
+                    "Aviso", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            
+            if (cmb_Cliente.getSelectedIndex() == -1 || 
+                cmb_Cliente.getSelectedItem() == null ||
+                cmb_Cliente.getSelectedItem().toString().isEmpty() ||
+                cmb_Cliente.getSelectedItem().toString().equals("Selecione um cliente")) {
+                JOptionPane.showMessageDialog(this, "Selecione um cliente!", "Aviso", 
+                    JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            
+            if (txt_DataVenda.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Informe a data da venda!", "Aviso", 
+                    JOptionPane.WARNING_MESSAGE);
+                return;
+            }
 
-    }//GEN-LAST:event_btn_CadastrarActionPerformed
+
+            String nomeCliente = cmb_Cliente.getSelectedItem().toString();
+            ClienteDAO clienteDAO = new ClienteDAO();
+            int idCliente = clienteDAO.getIdClientePorNome(nomeCliente);
+            
+            if (idCliente == -1) {
+                JOptionPane.showMessageDialog(this, "Cliente não encontrado no banco!", 
+                    "Erro", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            
+            String dataTexto = txt_DataVenda.getText().trim();
+            SimpleDateFormat formatoData;
+            Date dataVenda;
+            
+            
+            try {
+                
+                formatoData = new SimpleDateFormat("dd/MM/yyyy");
+                dataVenda = formatoData.parse(dataTexto);
+            } catch (ParseException e1) {
+                try {
+                    
+                    formatoData = new SimpleDateFormat("yyyy-MM-dd");
+                    dataVenda = formatoData.parse(dataTexto);
+                } catch (ParseException e2) {
+                    JOptionPane.showMessageDialog(this, 
+                        "Formato de data inválido! Use dd/MM/aaaa ou aaaa-MM-dd", 
+                        "Erro", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            }
+
+            
+            double valorTotalNota = 0;
+            for (int i = 0; i < tableModel.getRowCount(); i++) {
+                String totalStr = tableModel.getValueAt(i, 3).toString();
+                
+                double totalItem = Double.parseDouble(totalStr.replace("R$ ", "").replace(",", "."));
+                valorTotalNota += totalItem;
+            }
+
+            
+            Nota nota = new Nota();
+            nota.setDataVenda(dataVenda);
+            nota.setFkCliente(idCliente);
+            nota.setValorTotal(valorTotalNota);
+
+            NotaDAO notaDAO = new NotaDAO();
+            int idNota = notaDAO.inserirNota(nota);
+
+            if (idNota == -1) {
+                JOptionPane.showMessageDialog(this, "Erro ao salvar nota no banco!", 
+                    "Erro", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            
+            ItensNotaDAO itensNotaDAO = new ItensNotaDAO();
+            ProdutoDAO produtoDAO = new ProdutoDAO();
+            boolean todosItensInseridos = true;
+            StringBuilder erros = new StringBuilder();
+
+            
+            for (int i = 0; i < tableModel.getRowCount(); i++) {
+                try {
+                    
+                    String nomeProduto = tableModel.getValueAt(i, 0).toString();
+                    Object valorQuantidade = tableModel.getValueAt(i, 1);
+                    int quantidade;
+
+                     if (valorQuantidade instanceof Number) {
+                        
+                        quantidade = ((Number) valorQuantidade).intValue();
+                    } else {
+                        
+                        String strQuantidade = valorQuantidade.toString().trim();
+                        if (strQuantidade.contains(".")) {
+                            
+                            quantidade = (int) Math.round(Double.parseDouble(strQuantidade));
+                        } else {
+                            
+                            quantidade = Integer.parseInt(strQuantidade);
+                        }
+                    }
+                    
+                    
+                    String valorUnitarioStr = tableModel.getValueAt(i, 2).toString();
+                    double valorUnitario = Double.parseDouble(valorUnitarioStr.replace("R$", "").replace(",", ".").trim());
+
+                    
+                    int idProduto = produtoDAO.getIdProdutoPorNome(nomeProduto);
+                    
+                    if (idProduto == -1) {
+                        erros.append("Produto '").append(nomeProduto).append("' não encontrado.\n");
+                        todosItensInseridos = false;
+                        continue;
+                    }
+
+                    ItemNota item = new ItemNota(quantidade, idNota, idProduto, valorUnitario);
+                    
+                    
+                    if (!itensNotaDAO.inserirItemNota(item)) {
+                        erros.append("Falha ao inserir item: ").append(nomeProduto).append("\n");
+                        todosItensInseridos = false;
+                    }
+                } catch (Exception ex) {
+                    erros.append("Erro no item ").append(i + 1).append(": ").append(ex.getMessage()).append("\n");
+                    todosItensInseridos = false;
+                }
+            }
+
+            String mensagem;
+            if (todosItensInseridos) {
+                mensagem = String.format(
+                    "Nota cadastrada com sucesso!\n\n" +
+                    "ID da Nota: %d\n" +
+                    "Data: %s\n" +
+                    "Cliente: %s\n" +
+                    "Valor Total: R$ %.2f\n" +
+                    "Itens: %d itens inseridos com sucesso.",
+                    idNota, dataTexto, nomeCliente, valorTotalNota, tableModel.getRowCount()
+                );
+            } else {
+                mensagem = String.format(
+                    "Nota cadastrada, mas houve erros em alguns itens:\n\n" +
+                    "ID da Nota: %d\n" +
+                    "Data: %s\n" +
+                    "Cliente: %s\n" +
+                    "Valor Total: R$ %.2f\n\n" +
+                    "Erros:\n%s",
+                    idNota, dataTexto, nomeCliente, valorTotalNota, erros.toString()
+                );
+            }
+            
+            JOptionPane.showMessageDialog(this, mensagem, 
+                todosItensInseridos ? "Sucesso" : "Aviso", 
+                todosItensInseridos ? JOptionPane.INFORMATION_MESSAGE : JOptionPane.WARNING_MESSAGE);
+
+        } catch (Exception ex) {
+            System.err.println("Erro ao cadastrar nota:");
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Erro ao cadastrar nota: " + ex.getMessage(), 
+                "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
     private void btn_ListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ListarActionPerformed
 
@@ -394,7 +570,7 @@ public class LancamentoNota extends javax.swing.JFrame {
                 totalFormatado
             });
             
-            limparCampos();
+            // limparCampos();
             
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Erro ao adicionar item: " + ex.getMessage(), 

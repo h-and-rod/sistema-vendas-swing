@@ -128,5 +128,20 @@ public class ProdutoDAO {
         }
         return 0.0;
     }
+
+    public int getIdProdutoPorNome(String nome) {
+        String sql = "SELECT id FROM produto WHERE nome = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, nome);
+            ResultSet rs = stmt.executeQuery();
+            
+            if (rs.next()) {
+                return rs.getInt("id");
+            }
+        } catch (SQLException ex) {
+            System.out.println("Erro ao buscar ID do produto: " + ex.getMessage());
+        }
+        return -1;
+    }
 }
 
