@@ -113,6 +113,20 @@ public class ProdutoDAO {
         
         return nomesProdutos;
     }
-
+    
+    public double getPrecoProdutoPorNome(String nome) {
+        String sql = "SELECT precoVenda FROM produto WHERE nome = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, nome);
+            ResultSet rs = stmt.executeQuery();
+            
+            if (rs.next()) {
+                return rs.getDouble("precoVenda");
+            }
+        } catch (SQLException ex) {
+            System.out.println("Erro ao buscar preço do produto: " + ex.getMessage());
+        }
+        return 0.0;
+    }
 }
 

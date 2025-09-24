@@ -6,6 +6,8 @@
 package sistemaVendas.view;
 
 import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import sistemaVendas.model.dao.ClienteDAO;
 import sistemaVendas.model.dao.ProdutoDAO;
 
@@ -22,6 +24,7 @@ public class LancamentoNota extends javax.swing.JFrame {
         initComponents();
         carregarProdutos();
         carregarClientes();
+        inicializarTabela();
     }
     
     /**
@@ -237,8 +240,25 @@ public class LancamentoNota extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private DefaultTableModel tableModel;
+    
+    private void inicializarTabela() {
+        
+        tableModel = new DefaultTableModel(
+            new Object[][]{},
+            new String[]{"Produto", "Quantidade", "Valor Unitário", "Total"}
+        ) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        
+        tbl_Clientes.setModel(tableModel);
+    }
+    
     private void btn_LimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_LimparActionPerformed
-
+        limparTabela();
     }//GEN-LAST:event_btn_LimparActionPerformed
 
     private void btn_CadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_CadastrarActionPerformed
@@ -267,8 +287,106 @@ public class LancamentoNota extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_QuantidadeActionPerformed
 
+    private void limparTabela(){
+        cmb_Produto.setSelectedIndex(-1);
+        cmb_Cliente.setSelectedIndex(-1);
+        txt_Quantidade.setText("");
+        txt_IdNota.setText("");
+        txt_DataVenda.setText("");
+        txt_Quantidade.requestFocus();
+    }
+
     private void btn_AdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AdicionarActionPerformed
-        // TODO add your handling code here:
+        try {
+            if (txt_IdNota.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Informe o código da nota!", "Aviso",
+                JOptionPane.WARNING_MESSAGE);
+            txt_IdNota.requestFocus();
+            return;
+            }
+
+            if (cmb_Cliente.getSelectedIndex() == -1 ||
+            cmb_Cliente.getSelectedItem().toString().trim().isEmpty() ||
+            cmb_Cliente.getSelectedItem().toString().equals("Nenhum cliente selecionado")) {
+            JOptionPane.showMessageDialog(this, "Selecione um cliente!", "Aviso",
+                JOptionPane.WARNING_MESSAGE);
+            cmb_Cliente.requestFocus();
+            return;
+            }
+
+            if (txt_DataVenda.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Informe a data da venda!", "Aviso",
+                JOptionPane.WARNING_MESSAGE);
+            txt_DataVenda.requestFocus();
+            return;
+            }
+
+            if (cmb_Produto.getSelectedIndex() == -1 || 
+                cmb_Produto.getSelectedItem().toString().isEmpty() ||
+                cmb_Produto.getSelectedItem().toString().equals("Selecione um produto")) {
+                JOptionPane.showMessageDialog(this, "Selecione um produto!", "Aviso", 
+                    JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            
+            if (txt_Quantidade.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Informe a quantidade!", "Aviso", 
+                    JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            
+            String produtoSelecionado = cmb_Produto.getSelectedItem().toString();
+            double quantidade;
+            
+            try {
+                String quantidadeTexto = txt_Quantidade.getText().trim().replace(",", ".");
+
+                try {
+                    quantidade = Double.parseDouble(quantidadeTexto);
+                    if (quantidade <= 0) {
+                        JOptionPane.showMessageDialog(this, "Quantidade deve ser maior que zero!",
+                            "Erro", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(this, "Quantidade deve ser um número válido!",
+                        "Erro", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Quantidade deve ser um número válido!", 
+                    "Erro", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            ProdutoDAO produtoDAO = new ProdutoDAO();
+            double valorUnitario = produtoDAO.getPrecoProdutoPorNome(produtoSelecionado);
+            
+            if (valorUnitario == 0.0) {
+                JOptionPane.showMessageDialog(this, "Erro ao obter preço do produto!", 
+                    "Erro", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            double total = quantidade * valorUnitario;
+            
+            String valorUnitarioFormatado = String.format("R$ %.2f", valorUnitario);
+            String totalFormatado = String.format("R$ %.2f", total);
+            
+            tableModel.addRow(new Object[]{
+                produtoSelecionado,
+                quantidade,
+                valorUnitarioFormatado,
+                totalFormatado
+            });
+            
+            limparTabela();
+            
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Erro ao adicionar item: " + ex.getMessage(), 
+                "Erro", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btn_AdicionarActionPerformed
 
     
