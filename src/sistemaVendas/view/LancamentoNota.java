@@ -280,7 +280,17 @@ public class LancamentoNota extends javax.swing.JFrame {
     }
     
     private void btn_LimparCamposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_LimparCamposActionPerformed
-        limparCampos();
+
+        if (tableModel.getRowCount() > 0) {            
+            cmb_Produto.setSelectedIndex(-1);
+            txt_Quantidade.setText("");
+            txt_Quantidade.requestFocus();
+        } else {
+            txt_IdNota.setEditable(true);
+            cmb_Cliente.setEnabled(true);
+            txt_DataVenda.setEditable(true);
+            limparCampos();
+        }
     }//GEN-LAST:event_btn_LimparCamposActionPerformed
 
     private void btn_CadastrarActionPerformed(java.awt.event.ActionEvent evt) {                                              
@@ -571,7 +581,12 @@ public class LancamentoNota extends javax.swing.JFrame {
             });
             
             // limparCampos();
-            
+            if (tableModel.getRowCount() > 0) {
+                txt_IdNota.setEditable(false);
+                cmb_Cliente.setEnabled(false);
+                txt_DataVenda.setEditable(false);
+            }
+
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Erro ao adicionar item: " + ex.getMessage(), 
                 "Erro", JOptionPane.ERROR_MESSAGE);
@@ -627,7 +642,7 @@ public class LancamentoNota extends javax.swing.JFrame {
     }//GEN-LAST:event_cmb_ClienteActionPerformed
 
     private void btn_LimparTabelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_LimparTabelaActionPerformed
-        // TODO add your handling code here:
+        tableModel.setRowCount(0);
     }//GEN-LAST:event_btn_LimparTabelaActionPerformed
     
     
