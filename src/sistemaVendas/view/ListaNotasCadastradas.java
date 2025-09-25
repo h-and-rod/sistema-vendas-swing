@@ -109,8 +109,8 @@ public class ListaNotasCadastradas extends javax.swing.JFrame {
         for (Nota nota : notas) {
             tableModel.addRow(new Object[]{
                 nota.getId(),
-                nota.getDataVenda(), 
                 nota.getClienteNome(),
+                nota.getDataVenda(),
                 nota.getValorTotal()
             });
         }
