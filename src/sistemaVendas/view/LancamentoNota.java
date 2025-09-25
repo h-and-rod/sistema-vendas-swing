@@ -34,6 +34,18 @@ public class LancamentoNota extends javax.swing.JFrame {
         carregarProdutos();
         carregarClientes();
         inicializarTabela();
+        valorNota();
+    }
+    
+    public void valorNota() {
+        NotaDAO objNotaDAO = new NotaDAO();
+        Nota objNota = new Nota();
+        
+        Integer valNota = objNotaDAO.getUltimoIdNota();
+       
+        txt_IdNota.setText(String.valueOf(objNotaDAO.getUltimoIdNota() + 1));
+        //objNota.setId(valNota + 1);
+        txt_IdNota.setEditable(false);
     }
     
     /**
@@ -286,7 +298,6 @@ public class LancamentoNota extends javax.swing.JFrame {
             txt_Quantidade.setText("");  
             txt_Quantidade.requestFocus();
         } else {
-            txt_IdNota.setEditable(true);
             cmb_Cliente.setEnabled(true);
             txt_DataVenda.setEditable(true);
             limparCampos();
@@ -346,6 +357,7 @@ public class LancamentoNota extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this, 
                         "Formato de data inválido! Use dd/MM/aaaa ou aaaa-MM-dd", 
                         "Erro", JOptionPane.ERROR_MESSAGE);
+                    txt_DataVenda.setEditable(true);
                     return;
                 }
             }
@@ -440,6 +452,9 @@ public class LancamentoNota extends javax.swing.JFrame {
                     "Itens: %d itens inseridos com sucesso.",
                     idNota, dataTexto, nomeCliente, valorTotalNota, tableModel.getRowCount()
                 );
+                limparCampos();
+                limparTabela();
+                valorNota();
             } else {
                 mensagem = String.format(
                     "Nota cadastrada, mas houve erros em alguns itens:\n\n" +
@@ -492,7 +507,6 @@ public class LancamentoNota extends javax.swing.JFrame {
         cmb_Produto.setSelectedIndex(-1);
         cmb_Cliente.setSelectedIndex(-1);
         txt_Quantidade.setText("");
-        txt_IdNota.setText("");
         txt_DataVenda.setText("");
         txt_Quantidade.requestFocus();
     }
@@ -643,11 +657,14 @@ public class LancamentoNota extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cmb_ClienteActionPerformed
 
-    private void btn_LimparTabelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_LimparTabelaActionPerformed
+    public void limparTabela() {
         tableModel.setRowCount(0);
-        txt_IdNota.setEditable(true);
         cmb_Cliente.setEnabled(true);
-        txt_DataVenda.setEditable(true);        
+        txt_DataVenda.setEditable(true);
+    }
+
+    private void btn_LimparTabelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_LimparTabelaActionPerformed
+        limparTabela();      
     }//GEN-LAST:event_btn_LimparTabelaActionPerformed
     
     

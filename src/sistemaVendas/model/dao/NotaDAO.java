@@ -118,4 +118,22 @@ public class NotaDAO {
         }
         return lista;
     }
+        
+    public Integer getUltimoIdNota() {
+        String sql = "SELECT id FROM Nota ORDER BY id DESC LIMIT 1;";
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt("id");
+            } else {
+                return null; 
+            }
+
+        } catch (SQLException ex) {
+            System.err.println("Erro ao consultar o ID da última nota: " + ex.getMessage());
+            return null;
+        }
+    }
 }
