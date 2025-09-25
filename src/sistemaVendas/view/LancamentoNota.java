@@ -283,7 +283,7 @@ public class LancamentoNota extends javax.swing.JFrame {
 
         if (tableModel.getRowCount() > 0) {            
             cmb_Produto.setSelectedIndex(-1);
-            txt_Quantidade.setText("");
+            txt_Quantidade.setText("");  
             txt_Quantidade.requestFocus();
         } else {
             txt_IdNota.setEditable(true);
@@ -465,7 +465,9 @@ public class LancamentoNota extends javax.swing.JFrame {
     }
 
     private void btn_ListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ListarActionPerformed
-
+        ListaNotasCadastradas telaNotasCadastradas = new ListaNotasCadastradas();
+        telaNotasCadastradas.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btn_ListarActionPerformed
 
     private void btn_VoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_VoltarActionPerformed
