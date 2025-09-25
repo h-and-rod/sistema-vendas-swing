@@ -2,7 +2,7 @@ CREATE DATABASE SistemaVendas;
 
 USE sistemavendas;
 
---Código do produto, nome, descrição, preço de venda e quantidade em estoque
+-- Código do produto, nome, descrição, preço de venda e quantidade em estoque
 CREATE TABLE Produto (
 	id int PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(30) NOT NULL,
@@ -11,7 +11,7 @@ CREATE TABLE Produto (
     quantidade int NOT NULL
 );
 
---Código do cliente, nome, endereço, e-mail e telefone
+-- Código do cliente, nome, endereço, e-mail e telefone
 CREATE TABLE Cliente (
 	id int PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(30) NOT NULL,
@@ -22,7 +22,7 @@ CREATE TABLE Cliente (
 
 USE sistemavendas;
 
---Código da nota, cliente (selecionado a partir de uma lista de clientes cadastrados), produto (selecionado a partir de uma lista de produtos cadastrados), quantidade vendida e data da venda.
+-- Código da nota, cliente (selecionado a partir de uma lista de clientes cadastrados), produto (selecionado a partir de uma lista de produtos cadastrados), quantidade vendida e data da venda.
 CREATE TABLE Nota (
 	id int PRIMARY KEY AUTO_INCREMENT,
     dataVenda datetime,
@@ -45,7 +45,7 @@ CREATE TABLE ItensNota (
     FOREIGN KEY (FK_Produtos) REFERENCES Produto(id)
 );
 
---Criação de inserts para popular as tabelas com dados fictícios
+-- Criação de inserts para popular as tabelas com dados fictícios
 USE sistemavendas;
 
 INSERT INTO Produto (nome, descricao, precoVenda, quantidade)
