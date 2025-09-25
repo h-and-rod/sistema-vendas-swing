@@ -645,6 +645,9 @@ public class LancamentoNota extends javax.swing.JFrame {
 
     private void btn_LimparTabelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_LimparTabelaActionPerformed
         tableModel.setRowCount(0);
+        txt_IdNota.setEditable(true);
+        cmb_Cliente.setEnabled(true);
+        txt_DataVenda.setEditable(true);        
     }//GEN-LAST:event_btn_LimparTabelaActionPerformed
     
     
