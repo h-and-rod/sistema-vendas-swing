@@ -9,6 +9,7 @@ public class Nota {
     private int id;
     private Date dataVenda;
     private int fkCliente;
+    private String clienteNome;
     private double valorTotal;
 
     public Nota() {
@@ -42,6 +43,14 @@ public class Nota {
 
     public void setFkCliente(int fkCliente) {
         this.fkCliente = fkCliente;
+    }
+    
+    public String getClienteNome() {
+        return clienteNome;
+    }
+    
+    public void setClienteNome(String clienteNome) {
+        this.clienteNome = clienteNome;
     }
 
     public double getValorTotal() {

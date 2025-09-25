@@ -94,4 +94,28 @@ public class NotaDAO {
         }
         return notas;
     }
+    
+        public List<Nota> listarNotasComCliente() {
+        List<Nota> lista = new ArrayList<>();
+        String sql = "SELECT n.id, n.dataVenda, c.nome AS cliente, n.valorTotal " +
+                     "FROM Nota n " +
+                     "INNER JOIN Cliente c ON n.FK_Cliente = c.id";
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                Nota nota = new Nota();
+                nota.setId(rs.getInt("id"));
+                nota.setDataVenda(rs.getDate("dataVenda"));
+                nota.setClienteNome(rs.getString("cliente"));
+                nota.setValorTotal(rs.getDouble("valorTotal"));
+                lista.add(nota);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return lista;
+    }
 }
