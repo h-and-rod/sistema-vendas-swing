@@ -5,10 +5,15 @@
  */
 package sistemaVendas.view;
 
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.*;
+import java.io.FileOutputStream;
 import java.util.List;
+import javax.swing.JOptionPane;
 import sistemaVendas.model.Nota;
 import sistemaVendas.model.dao.NotaDAO;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -40,6 +45,7 @@ public class ListaNotasCadastradas extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_NotasCadastradas = new javax.swing.JTable();
         btn_Voltar1 = new javax.swing.JButton();
+        bnt_pdf = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -63,6 +69,13 @@ public class ListaNotasCadastradas extends javax.swing.JFrame {
             }
         });
 
+        bnt_pdf.setText("Gerar PDF");
+        bnt_pdf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bnt_pdfActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -78,6 +91,10 @@ public class ListaNotasCadastradas extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 507, Short.MAX_VALUE))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(218, 218, 218)
+                .addComponent(bnt_pdf)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -88,7 +105,9 @@ public class ListaNotasCadastradas extends javax.swing.JFrame {
                     .addComponent(btn_Voltar1))
                 .addGap(64, 64, 64)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(89, Short.MAX_VALUE))
+                .addGap(27, 27, 27)
+                .addComponent(bnt_pdf)
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         pack();
@@ -99,6 +118,11 @@ public class ListaNotasCadastradas extends javax.swing.JFrame {
         telaNota.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btn_Voltar1ActionPerformed
+
+    private void bnt_pdfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bnt_pdfActionPerformed
+        //bnt_pdf.addActionListener(evt -> gerarPDF());
+        gerarPDF();
+    }//GEN-LAST:event_bnt_pdfActionPerformed
     
     private void carregarTabelaNotas() {
         tableModel.setRowCount(0);
@@ -115,6 +139,50 @@ public class ListaNotasCadastradas extends javax.swing.JFrame {
             });
         }
     }
+    
+    private void gerarPDF() {
+        Document documento = new Document(PageSize.A4);
+        try {
+            String caminhoArquivo = "relatorio_notas_saida.pdf";
+            PdfWriter.getInstance(documento, new FileOutputStream(caminhoArquivo));
+            documento.open();
+
+            // Cabeçalho
+            Paragraph titulo = new Paragraph("Notas de Saída Cadastradas",
+                    FontFactory.getFont(FontFactory.HELVETICA_BOLD, 18));
+            titulo.setAlignment(Element.ALIGN_CENTER);
+            documento.add(titulo);
+            documento.add(new Paragraph(" ")); // espaçamento
+
+            // Criar tabela PDF
+            TableModel model = tbl_NotasCadastradas.getModel();
+            PdfPTable tabelaPDF = new PdfPTable(model.getColumnCount());
+            tabelaPDF.setWidthPercentage(100);
+
+            // Cabeçalhos
+            for (int i = 0; i < model.getColumnCount(); i++) {
+                tabelaPDF.addCell(new PdfPCell(new Phrase(model.getColumnName(i))));
+            }
+
+            // Linhas
+            for (int i = 0; i < model.getRowCount(); i++) {
+                for (int j = 0; j < model.getColumnCount(); j++) {
+                    Object valor = model.getValueAt(i, j);
+                    tabelaPDF.addCell(valor != null ? valor.toString() : "");
+                }
+            }
+
+            documento.add(tabelaPDF);
+            documento.close();
+
+            JOptionPane.showMessageDialog(this, "PDF gerado com sucesso em: " + caminhoArquivo);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Erro ao gerar PDF: " + e.getMessage());
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -151,6 +219,7 @@ public class ListaNotasCadastradas extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bnt_pdf;
     private javax.swing.JButton btn_Voltar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbl_CadastroCliente;
